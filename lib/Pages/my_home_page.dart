@@ -14,16 +14,15 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  static const Color colorLight = Color(0xFFe6eeff);
+  static const Color colorDark = Color(0xFF374352);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const Color colorLight = Color(0xFFe6eeff);
-  static const Color colorDark = Color(0xFF374352);
-
-  bool darkMode = true;
+  bool darkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,29 +33,183 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: darkMode ? colorDark : colorLight,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      backgroundColor: darkMode ? colorDark : colorLight,
+      backgroundColor: darkMode ? MyHomePage.colorDark : MyHomePage.colorLight,
       body: SafeArea(
-        child: Center(
-          child: ButtonRounded(
-            darkMode: darkMode,
-            colorDark: colorDark,
-            colorLight: colorLight,
-            child: const Icon(
-              Icons.apple,
-              size: 100,
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(18),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: Text("d"),
+              ),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "C",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "(",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: ")",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "/",
+                        textColor: darkMode ? Colors.green : Colors.redAccent,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "7",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "8",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "9",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "x",
+                        textColor: darkMode ? Colors.green : Colors.redAccent,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "4",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "5",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "6",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "-",
+                        textColor: darkMode ? Colors.green : Colors.redAccent,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "1",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "2",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "3",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "+",
+                        textColor: darkMode ? Colors.green : Colors.redAccent,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "0",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: ".",
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        icon: Icons.backspace_outlined,
+                      ),
+                      _buttonRounded(
+                        darkMode: darkMode,
+                        title: "=",
+                        textColor: darkMode ? Colors.green : Colors.redAccent,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+// ignore: camel_case_types
+class _buttonRounded extends StatelessWidget {
+  const _buttonRounded({
+    required this.darkMode,
+    this.title,
+    this.icon,
+    this.textColor,
+  });
+
+  final bool darkMode;
+  final String? title;
+  final IconData? icon;
+  final Color? textColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ButtonRounded(
+        darkMode: darkMode,
+        colorLight: MyHomePage.colorLight,
+        colorDark: MyHomePage.colorDark,
+        borderRadius: BorderRadius.circular(40),
+        padding: const EdgeInsets.all(16),
+        child: SizedBox(
+          width: 30,
+          height: 30,
+          child: Center(
+            child: title != null
+                ? Text(
+                    title!,
+                    style: TextStyle(
+                      color:
+                          textColor ?? (darkMode ? Colors.white : Colors.black),
+                      fontSize: 25,
+                    ),
+                  )
+                : Icon(
+                    icon,
+                    color: darkMode ? Colors.green : Colors.redAccent,
+                    size: 25,
+                  ),
+          ),
+        ),
+      ),
     );
   }
 }

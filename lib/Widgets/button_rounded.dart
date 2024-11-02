@@ -8,7 +8,7 @@ class ButtonRounded extends StatefulWidget {
     required this.colorDark,
     required this.child,
     this.borderRadius,
-    this.edgeInsetsGeometry,
+    this.padding,
   });
 
   final bool darkMode;
@@ -16,7 +16,7 @@ class ButtonRounded extends StatefulWidget {
   final Color colorDark;
   final Widget child;
   final BorderRadius? borderRadius;
-  final EdgeInsetsGeometry? edgeInsetsGeometry;
+  final EdgeInsetsGeometry? padding;
 
   @override
   State<ButtonRounded> createState() => _ButtonRoundedState();
@@ -43,7 +43,7 @@ class _ButtonRoundedState extends State<ButtonRounded> {
       onPointerDown: _onPointerDown,
       onPointerUp: _onPointerUp,
       child: Container(
-        padding: widget.edgeInsetsGeometry,
+        padding: widget.padding,
         decoration: BoxDecoration(
           color: widget.darkMode ? widget.colorDark : widget.colorLight,
           borderRadius: widget.borderRadius,
