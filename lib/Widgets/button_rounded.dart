@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 
 class ButtonRounded extends StatefulWidget {
-  const ButtonRounded({super.key, required this.colorState});
+  const ButtonRounded({
+    super.key,
+    required this.darkMode,
+    required this.colorLight,
+    required this.colorDark,
+    required this.child,
+    this.borderRadius,
+    this.edgeInsetsGeometry,
+  });
 
-  final Color colorState;
+  final bool darkMode;
+  final Color colorLight;
+  final Color colorDark;
+  final Widget child;
+  final BorderRadius? borderRadius;
+  final EdgeInsetsGeometry? edgeInsetsGeometry;
 
   @override
   State<ButtonRounded> createState() => _ButtonRoundedState();
@@ -30,31 +43,32 @@ class _ButtonRoundedState extends State<ButtonRounded> {
       onPointerDown: _onPointerDown,
       onPointerUp: _onPointerUp,
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: widget.edgeInsetsGeometry,
         decoration: BoxDecoration(
-          color: widget.colorState,
-          borderRadius: BorderRadius.circular(10),
+          color: widget.darkMode ? widget.colorDark : widget.colorLight,
+          borderRadius: widget.borderRadius,
           boxShadow: _isPressed
               ? null
               : [
                   BoxShadow(
-                    color: Colors.blueGrey.shade200,
+                    color: widget.darkMode
+                        ? Colors.black54
+                        : Colors.blueGrey.shade200,
                     offset: const Offset(4.0, 4.0),
                     blurRadius: 15,
                     spreadRadius: 1,
                   ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: Offset(-4, -4),
+                  BoxShadow(
+                    color: widget.darkMode
+                        ? Colors.blueGrey.shade700
+                        : Colors.white,
+                    offset: const Offset(-4, -4),
                     blurRadius: 15,
                     spreadRadius: 1,
                   ),
                 ],
         ),
-        child: const Icon(
-          Icons.apple,
-          size: 100,
-        ),
+        child: widget.child,
       ),
     );
   }

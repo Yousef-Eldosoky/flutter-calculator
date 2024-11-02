@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const Color colorLight = Color(0xFFe6eeff);
   static const Color colorDark = Color(0xFF374352);
 
-  bool darkMode = false;
+  bool darkMode = true;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: darkMode ? colorDark : colorLight,
       body: SafeArea(
         child: Center(
-          child: ButtonRounded(colorState: darkMode ? colorDark : colorLight,),
+          child: ButtonRounded(
+            darkMode: darkMode,
+            colorDark: colorDark,
+            colorLight: colorLight,
+            child: const Icon(
+              Icons.apple,
+              size: 100,
+            ),
+          ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
