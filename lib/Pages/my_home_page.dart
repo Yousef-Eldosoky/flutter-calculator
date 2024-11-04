@@ -1,5 +1,6 @@
 import 'package:calculator/Widgets/button_oval.dart';
 import 'package:calculator/Widgets/button_rounded.dart';
+import 'package:calculator/Widgets/switch_mode.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -25,6 +26,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool darkMode = false;
 
+  void switching() {
+    setState(() {
+      darkMode ? darkMode = false : darkMode = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -41,8 +48,49 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                child: Text("d"),
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: switching,
+                    child: SwitchMode(darkMode: darkMode),
+                  ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "6.010",
+                      style: TextStyle(
+                        fontSize: 55,
+                        fontWeight: FontWeight.bold,
+                        color: darkMode ? Colors.white : Colors.black,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "=",
+                        style: TextStyle(
+                          fontSize: 35,
+                          color: darkMode ? Colors.green : Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        "10+50*12",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: darkMode ? Colors.green : Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
               Column(
                 children: [
