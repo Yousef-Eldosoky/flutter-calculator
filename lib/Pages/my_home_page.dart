@@ -37,6 +37,21 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  int countDecimalPlaces(double number) {
+    // Convert the number to a string
+    String numberStr = number.toString();
+
+    // Split the string at the decimal point
+    List<String> parts = numberStr.split('.');
+
+    // Check if there's a fractional part and return its length
+    if (parts.length > 1) {
+      return parts[1].length; // Length of the fractional part
+    }
+
+    return 0; // No fractional part
+  }
+
   // Function to handle button taps and update the input
   void _onButtonPressed(String value) {
     setState(() {
@@ -77,7 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void _calculateResult() {
     try {
       double parsedResult = _evaluateExpression(input);
-      result = parsedResult.toStringAsFixed(4);
+      int decimalCounts = countDecimalPlaces(parsedResult);
+      if (decimalCounts > 3) {
+        result = parsedResult.toStringAsFixed(4);
+      } else {
+        result = parsedResult.toStringAsFixed(decimalCounts);
+      }
     } catch (e) {
       result = "Error";
     }
@@ -114,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onTap: switching,
                     child: SwitchMode(darkMode: darkMode),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   ),
                   Align(
@@ -147,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                 ],
