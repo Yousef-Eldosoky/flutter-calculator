@@ -1,19 +1,16 @@
+import 'package:calculator/Pages/my_home_page.dart';
 import 'package:flutter/material.dart';
 
 class ButtonRounded extends StatefulWidget {
   const ButtonRounded({
     super.key,
     required this.darkMode,
-    required this.colorLight,
-    required this.colorDark,
     required this.child,
     this.borderRadius,
     this.padding,
   });
 
   final bool darkMode;
-  final Color colorLight;
-  final Color colorDark;
   final Widget child;
   final BorderRadius? borderRadius;
   final EdgeInsetsGeometry? padding;
@@ -45,7 +42,7 @@ class _ButtonRoundedState extends State<ButtonRounded> {
       child: Container(
         padding: widget.padding,
         decoration: BoxDecoration(
-          color: widget.darkMode ? widget.colorDark : widget.colorLight,
+          color: widget.darkMode ? MyHomePage.colorDark : MyHomePage.colorLight,
           borderRadius: widget.borderRadius,
           boxShadow: _isPressed
               ? null

@@ -1,3 +1,4 @@
+import 'package:calculator/Widgets/button_oval.dart';
 import 'package:calculator/Widgets/button_rounded.dart';
 import 'package:flutter/material.dart';
 
@@ -45,6 +46,27 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ButtonOval(
+                        darkMode: darkMode,
+                        title: "sin",
+                      ),
+                      ButtonOval(
+                        darkMode: darkMode,
+                        title: "cos",
+                      ),
+                      ButtonOval(
+                        darkMode: darkMode,
+                        title: "tan",
+                      ),
+                      ButtonOval(
+                        darkMode: darkMode,
+                        title: "%",
+                      ),
+                    ],
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -185,8 +207,6 @@ class _buttonRounded extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ButtonRounded(
         darkMode: darkMode,
-        colorLight: MyHomePage.colorLight,
-        colorDark: MyHomePage.colorDark,
         borderRadius: BorderRadius.circular(40),
         padding: const EdgeInsets.all(16),
         child: SizedBox(
