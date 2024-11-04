@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:calculator/Widgets/button_oval.dart';
 import 'package:calculator/Widgets/button_rounded.dart';
 import 'package:calculator/Widgets/switch_mode.dart';
+import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -25,11 +28,68 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool darkMode = false;
+  String input = ""; // Holds the input from buttons
+  String result = "0"; // Displays the result after calculation
 
   void switching() {
     setState(() {
-      darkMode ? darkMode = false : darkMode = true;
+      darkMode = !darkMode;
     });
+  }
+
+  // Function to handle button taps and update the input
+  void _onButtonPressed(String value) {
+    setState(() {
+      if (value == "C") {
+        input = "";
+        result = "0";
+      } else if (value == "=") {
+        if (input.isNotEmpty) {
+          _calculateResult();
+        }
+      } else if (value == "%") {
+        if (input.isNotEmpty) {
+          value = "/100";
+          input += value;
+        }
+      } else if (value == "/" ||
+          value == "+" ||
+          value == "-" ||
+          value == "." ||
+          value == "*") {
+        if (input.isNotEmpty) {
+          if (input[input.length - 1] == "/" ||
+              input[input.length - 1] == "+" ||
+              input[input.length - 1] == "-" ||
+              input[input.length - 1] == "." ||
+              input[input.length - 1] == "*") {
+          } else {
+            input += value;
+          }
+        }
+      } else {
+        input += value;
+      }
+    });
+  }
+
+  // Function to evaluate the input expression
+  void _calculateResult() {
+    try {
+      double parsedResult = _evaluateExpression(input);
+      result = parsedResult.toStringAsFixed(4);
+    } catch (e) {
+      result = "Error";
+    }
+  }
+
+  double _evaluateExpression(String expression) {
+    // Evaluate expression
+    const evaluator = ExpressionEvaluator();
+    Expression parsedExpression = Expression.parse(expression);
+    double result = evaluator.eval(
+        parsedExpression, {"cos": cos, "sin": sin, "tan": tan}).toDouble();
+    return result;
   }
 
   @override
@@ -60,9 +120,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      "6.010",
+                      result,
                       style: TextStyle(
-                        fontSize: 55,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold,
                         color: darkMode ? Colors.white : Colors.black,
                       ),
@@ -79,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Text(
-                        "10+50*12",
+                        input,
                         style: TextStyle(
                           fontSize: 20,
                           color: darkMode ? Colors.green : Colors.grey,
@@ -100,18 +160,22 @@ class _MyHomePageState extends State<MyHomePage> {
                       ButtonOval(
                         darkMode: darkMode,
                         title: "sin",
+                        onPressed: () => _onButtonPressed("sin("),
                       ),
                       ButtonOval(
                         darkMode: darkMode,
                         title: "cos",
+                        onPressed: () => _onButtonPressed("cos("),
                       ),
                       ButtonOval(
                         darkMode: darkMode,
                         title: "tan",
+                        onPressed: () => _onButtonPressed("tan("),
                       ),
                       ButtonOval(
                         darkMode: darkMode,
                         title: "%",
+                        onPressed: () => _onButtonPressed("%"),
                       ),
                     ],
                   ),
@@ -121,19 +185,23 @@ class _MyHomePageState extends State<MyHomePage> {
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "C",
+                        onPressed: () => _onButtonPressed("C"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "(",
+                        onPressed: () => _onButtonPressed("("),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: ")",
+                        onPressed: () => _onButtonPressed(")"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "/",
                         textColor: darkMode ? Colors.green : Colors.redAccent,
+                        onPressed: () => _onButtonPressed("/"),
                       ),
                     ],
                   ),
@@ -143,19 +211,23 @@ class _MyHomePageState extends State<MyHomePage> {
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "7",
+                        onPressed: () => _onButtonPressed("7"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "8",
+                        onPressed: () => _onButtonPressed("8"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "9",
+                        onPressed: () => _onButtonPressed("9"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "x",
                         textColor: darkMode ? Colors.green : Colors.redAccent,
+                        onPressed: () => _onButtonPressed("*"),
                       ),
                     ],
                   ),
@@ -165,19 +237,23 @@ class _MyHomePageState extends State<MyHomePage> {
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "4",
+                        onPressed: () => _onButtonPressed("4"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "5",
+                        onPressed: () => _onButtonPressed("5"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "6",
+                        onPressed: () => _onButtonPressed("6"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "-",
                         textColor: darkMode ? Colors.green : Colors.redAccent,
+                        onPressed: () => _onButtonPressed("-"),
                       ),
                     ],
                   ),
@@ -187,19 +263,23 @@ class _MyHomePageState extends State<MyHomePage> {
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "1",
+                        onPressed: () => _onButtonPressed("1"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "2",
+                        onPressed: () => _onButtonPressed("2"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "3",
+                        onPressed: () => _onButtonPressed("3"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "+",
                         textColor: darkMode ? Colors.green : Colors.redAccent,
+                        onPressed: () => _onButtonPressed("+"),
                       ),
                     ],
                   ),
@@ -209,19 +289,29 @@ class _MyHomePageState extends State<MyHomePage> {
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "0",
+                        onPressed: () => _onButtonPressed("0"),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: ".",
+                        onPressed: () => _onButtonPressed("."),
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         icon: Icons.backspace_outlined,
+                        onPressed: () {
+                          if (input.isNotEmpty) {
+                            setState(() {
+                              input = input.substring(0, input.length - 1);
+                            });
+                          }
+                        },
                       ),
                       _buttonRounded(
                         darkMode: darkMode,
                         title: "=",
                         textColor: darkMode ? Colors.green : Colors.redAccent,
+                        onPressed: () => _onButtonPressed("="),
                       ),
                     ],
                   ),
@@ -242,39 +332,44 @@ class _buttonRounded extends StatelessWidget {
     this.title,
     this.icon,
     this.textColor,
+    required this.onPressed,
   });
 
   final bool darkMode;
   final String? title;
   final IconData? icon;
   final Color? textColor;
+  final VoidCallback onPressed; // Step 2: Add this property
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ButtonRounded(
-        darkMode: darkMode,
-        borderRadius: BorderRadius.circular(40),
-        padding: const EdgeInsets.all(16),
-        child: SizedBox(
-          width: 30,
-          height: 30,
-          child: Center(
-            child: title != null
-                ? Text(
-                    title!,
-                    style: TextStyle(
-                      color:
-                          textColor ?? (darkMode ? Colors.white : Colors.black),
-                      fontSize: 25,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ButtonRounded(
+          darkMode: darkMode,
+          borderRadius: BorderRadius.circular(40),
+          padding: const EdgeInsets.all(16),
+          child: SizedBox(
+            width: 30,
+            height: 30,
+            child: Center(
+              child: title != null
+                  ? Text(
+                      title!,
+                      style: TextStyle(
+                        color: textColor ??
+                            (darkMode ? Colors.white : Colors.black),
+                        fontSize: 25,
+                      ),
+                    )
+                  : Icon(
+                      icon,
+                      color: darkMode ? Colors.green : Colors.redAccent,
+                      size: 25,
                     ),
-                  )
-                : Icon(
-                    icon,
-                    color: darkMode ? Colors.green : Colors.redAccent,
-                    size: 25,
-                  ),
+            ),
           ),
         ),
       ),
