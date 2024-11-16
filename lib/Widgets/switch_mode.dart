@@ -15,7 +15,7 @@ class _SwitchModeState extends State<SwitchMode> {
   Widget build(BuildContext context) {
     return ButtonRounded(
       darkMode: widget.darkMode,
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 10,
         horizontal: 15,
       ),
