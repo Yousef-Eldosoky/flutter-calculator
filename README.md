@@ -14,11 +14,11 @@ A simple and user-friendly calculator app built with Flutter. This app allows us
 ## Screenshots
 
 
-<img src="screenshots/light.png" alt="Home Page Light" width="300"/>
+<img src="https://i.postimg.cc/jqngX27Y/light.png" alt="Home Page Light" width="300"/>
 
 ###
 
-<img src="screenshots/dark.png" alt="Home Page Dark" width="300"/>
+<img src="https://i.postimg.cc/C5b4VZGZ/dark.png" alt="Home Page Dark" width="300"/>
 
 ## Technologies Used
 
